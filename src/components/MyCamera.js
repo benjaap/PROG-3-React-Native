@@ -58,43 +58,43 @@ export default class MyCamera extends Component {
 
   render() {
     return (
-        <View>
+        <View  style={StyleSheet.cameraBody}>
             {
                 this.state.permission ? 
                     this.state.showCamera ?
-                        <View>
+                        <View  style={styles.cameraBody}>
                             <Camera 
-                                style={{}}
+                                style={styles.cameraBody}
                                 type={Camera.Constants.Type.back}
                                 ref= {(metodosDeCamara) => this.metodosDeCamara = metodosDeCamara} 
                             />
 
                             <TouchableOpacity 
-                                style={{}}
+                                style={styles.button}
                                 onPress = { ()=>this.tomarFoto()}
                             >
                                 <Text>Tomar Foto</Text>
                             </TouchableOpacity>
                         </View> :
                         
-                        <View>
+                        <View >
                             {/* Vista previa de la imagen */}
                             <Image 
-                                style={{}}
+                                style={styles.preview}
                                 source={{uri:this.state.uri}}
                                 resizeMode='cover'
 
                             />
                             {/* Guardar fotor */}
                             <TouchableOpacity 
-                                style={{}}
+                                style={styles.preview}
                                 onPress={()=>this.guardarFoto()}
                             >
-                                <Text>Guardar Foto</Text>
+                                <Text style={styles.button}>Guardar Foto</Text>
                             </TouchableOpacity>
                             {/* Rechazar foto */}
                             <TouchableOpacity 
-                                style={{}}
+                               style={styles.button}
                                 onPress={()=>this.clearFoto()}
                             >
                                 <Text>Eliminar</Text>
@@ -109,5 +109,18 @@ export default class MyCamera extends Component {
   }
 }
 const styles=StyleSheet.create({
-
+    cameraBody:{
+        height:500
+    },
+    button:{
+        height:"20%",
+        borderColor:"#ccc",
+        borderdWidth:1,
+        padding:5,
+        borderRadius:4,
+        marginTop:5
+    },
+    preview:{
+        height:"50%"
+    }
 })
