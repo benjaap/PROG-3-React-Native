@@ -42,16 +42,17 @@ onImageUpload(url){
 }
     render(){
         return (
-            <View >
+            <View style={styles.container}>
                {
                 this.state.showCamera? 
                 <MyCamera
+               
                     onImageUpload = {url => this.onImageUpload(url)}
                 />:
-                <View>
-                    <Text>Nuevo Posteo</Text>
+                <View  style={styles.container}>
+                    <Text style={styles.tittle}>Nuevo Posteo</Text>
                     <TextInput
-                    style={{}}
+                    style={styles.field}
                     keyboardType="default"
                     placeholder="Descripción"
                     onChangeText={text=>this.setState({
@@ -59,9 +60,9 @@ onImageUpload(url){
                     })}
                     />
                     <TouchableOpacity
-                    style={{}}
+                    style={styles.button}
                     onPress={()=>this.guardarPost()}>
-                        <Text>Guardar Posteo</Text>
+                        <Text style={styles.buttonText}>Guardar Posteo</Text>
                     </TouchableOpacity>
                 </View>
                }
@@ -69,6 +70,28 @@ onImageUpload(url){
         )
     }
 }
-StyleSheet.create({
-
+const styles= StyleSheet.create({
+    container:{
+        paddingHorizontal:10,
+        marginTop:10,
+        height:"100%"
+    },
+    tittle:{
+        marginBottom:20
+    },
+    field:{
+        borderColor:"#dcdcdc",
+        borderWidth:1,
+        borderRadius:2,
+        padding:3,
+        marginBottom:8
+    },
+    button:{
+        borderRadius:2,
+        padding:3,
+        backgroundColor:"green"
+    },
+    buttonText:{
+        color:"grey"
+    }
 })
