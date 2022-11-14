@@ -9,7 +9,8 @@ export default class Busqueda extends Component {
         this.state={
             busqueda:"",
             cargando:true,
-            users:[]
+            users:[],
+            resultados:[]
         }
     }
     componentDidMount(){
@@ -37,6 +38,10 @@ export default class Busqueda extends Component {
                 console.log(user)
                 return user.data.username.toUpperCase()
                     .includes(filtro.toUpperCase())
+                
+            })
+            this.setState({
+                resultados:resultados
             })
         console.log(resultados)}
         else{
@@ -59,10 +64,18 @@ export default class Busqueda extends Component {
                 </TouchableOpacity>
                 
                 <FlatList
-                        data={ resultados }
+                        data={ this.state.resultados }
                         keyExtractor={ item => item.id.toString() }
-                        renderItem={ ({item}) => <Text>{item.username}</Text> }
+                        renderItem={ ({item}) => (
+                            <View>
+                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
+                               <Text>{item.data.username}</Text>
+                             </TouchableOpacity>
+                            </View>
+                            )}
+                            
                 />
+                       
                 
             </View>
                 
