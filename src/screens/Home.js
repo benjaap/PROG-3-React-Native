@@ -3,6 +3,7 @@ import { Text, TextInput, View, TouchableOpacity, StyleSheet } from 'react-nativ
 import { FlatList } from "react-native-web";
 import{db, auth } from '../firebase/config';
 import firebase from 'firebase';
+import Post from '../components/Post'
 
 class Home extends Component{
     constructor(props){
@@ -23,13 +24,7 @@ class Home extends Component{
             this.setState({posteos:postsFromDb})
         })
     }
-    likear(idDelPosteo){
-        db.collection("posts").doc(idDelPosteo).update({
-            likes:firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
-        })
-        .then((res)=> console.log(res))
-        .catch((err)=>console.log(err))
-    }
+   
    
     render(){
        
@@ -38,18 +33,10 @@ class Home extends Component{
                 <Text>Soy el home</Text>
                 <FlatList  
                     data={this.state.posteos}
-                    keyExtrator={item => item.id}
+                    keyExtrator={item => item.id.toString()}
                     renderItem={({item})=>
                     (
-                        <View>
-                            <Text>{item.data.descripcion}</Text>
-                            <TouchableOpacity onPress={()=>{this.likear(item.id)}}>
-                                 <Text>Dar Like</Text>
-                             </TouchableOpacity>
-                             <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Comentarios", {id:idDelPosteo})}}>
-                                <Text>Comentarios</Text>
-                             </TouchableOpacity>
-                        </View>
+                    <Post posteo={item}/>
                             
                     )}
                     />

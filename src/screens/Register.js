@@ -35,7 +35,7 @@ class Register extends Component {
                 email: email,
                 username: username,
                 bio: bio,
-                post: []
+                
             })   
             .then((res)=> {
                 this.setState({
