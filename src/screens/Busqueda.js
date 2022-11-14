@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { db } from '../firebase/config';
-import { Text, TextInput, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 
 export default class Busqueda extends Component {
 
@@ -57,7 +57,15 @@ export default class Busqueda extends Component {
                  <TouchableOpacity onPress={()=>{this.busqueda(this.state.busqueda)}}>
                     <Text>Buscar</Text>
                 </TouchableOpacity>
+                
+                <FlatList
+                        data={ resultados }
+                        keyExtractor={ item => item.id.toString() }
+                        renderItem={ ({item}) => <Text>{item.username}</Text> }
+                />
+                
             </View>
+                
             )
             
             

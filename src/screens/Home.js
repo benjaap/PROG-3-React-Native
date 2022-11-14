@@ -46,7 +46,11 @@ class Home extends Component{
                             <TouchableOpacity onPress={()=>{this.likear(item.id)}}>
                                  <Text>Dar Like</Text>
                              </TouchableOpacity>
+                             <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Comentarios", {id:idDelPosteo})}}>
+                                <Text>Comentarios</Text>
+                             </TouchableOpacity>
                         </View>
+                            
                     )}
                     />
                   

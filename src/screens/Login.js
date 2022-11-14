@@ -14,7 +14,7 @@ class Login extends Component {
     auth
       .signInWithEmailAndPassword(email, pass)
       .then((res) => {
-        this.props.navigation.navigate('Menu')
+        this.props.navigation.navigate('Menu', {id:1})
       })
       .catch(err => this.setState({err: err.message}) )
     }
