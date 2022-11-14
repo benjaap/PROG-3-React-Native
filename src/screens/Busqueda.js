@@ -10,7 +10,8 @@ export default class Busqueda extends Component {
             busqueda:"",
             cargando:true,
             users:[],
-            resultados:[]
+            resultados:[],
+            sugeridos:[]
         }
     }
     componentDidMount(){
@@ -23,6 +24,7 @@ export default class Busqueda extends Component {
             console.log(usersFromDB);
             this.setState({
                 users:usersFromDB,
+                sugeridos:usersFromDB.slice(4),
                 cargando:false
             })
 
@@ -44,37 +46,55 @@ export default class Busqueda extends Component {
                 resultados:resultados
             })
         console.log(resultados)}
-        else{
-
-         }
+        
     }
     
     render (){
         return(
            
             <View>
-                <Text>Hola soy el screen de busqueda</Text>
                 <TextInput
                     placeholder="Buscar usuarios"
                     keyboardType="default"
-                    onChangeText={(text)=>{this.setState({busqueda:text})}}>
+                    onChangeText={(text)=>{this.busqueda(text)}}>
                  </TextInput>
                  <TouchableOpacity onPress={()=>{this.busqueda(this.state.busqueda)}}>
                     <Text>Buscar</Text>
                 </TouchableOpacity>
                 
-                <FlatList
-                        data={ this.state.resultados }
-                        keyExtractor={ item => item.id.toString() }
-                        renderItem={ ({item}) => (
-                            <View>
-                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
-                               <Text>{item.data.username}</Text>
-                             </TouchableOpacity>
-                            </View>
-                            )}
-                            
-                />
+               
+            {this.state.resultados.length === 0?
+                 <>
+                  <Text>Perfiles sugeridos</Text> 
+                  
+                  <FlatList
+                  data={this.state.sugeridos}
+                  keyExtractor={ item => item.id.toString() }
+                  renderItem={ ({item}) => (
+                      <View>
+                      <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
+                         <Text>{item.data.username}</Text>
+                       </TouchableOpacity>
+                      </View>
+                      )}
+                  />
+                </>
+                :  <FlatList
+                data={ this.state.resultados }
+                keyExtractor={ item => item.id.toString() }
+                renderItem={ ({item}) => (
+                    <View>
+                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
+                       <Text>{item.data.username}</Text>
+                     </TouchableOpacity>
+                    </View>
+                    )}
+                    
+        />}
+               
+                
+          
+               
                        
                 
             </View>
