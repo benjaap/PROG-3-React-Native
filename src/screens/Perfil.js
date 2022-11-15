@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { auth, db } from '../firebase/config';
-import { Text, TextInput, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import Post from '../components/Post';
 
 export default class Perfil extends Component {
 
@@ -51,24 +52,32 @@ export default class Perfil extends Component {
             )
     }
 
-logOut() {
-    auth.signOut();
-    this.props.navigation.navigate("Register")
-}
+    logOut() {
+        auth.signOut();
+        this.props.navigation.navigate("Register")
+    }
 
-render() {
-    return (
-        <View>
-            <Text>Mi perfil</Text>
-            <TouchableOpacity onPress={() => this.logOut()}>
-                <Text>Cerrar Sesión</Text>
-            </TouchableOpacity>
-            <text>{this.state.username}</text>
-            <text>{auth.currentUser.email}</text>
-            {/* <text>{this.state.posts.lenght}</text> */}
-            <text>{auth.currentUser.metadata.lastSignInTime}</text>
-            
-
-        </View>)
-}
+    render() {
+        return (
+            <View>
+                <Text>MI PERFIL</Text>
+                
+                <Text>Usuario: {this.state.username}</Text>
+                <Text>Email: {auth.currentUser.email}</Text>
+                <Text>Tenes{this.state.post.lengthj} posteos</Text> 
+                <Text>Posteos:</Text>
+                {this.state.post.length > 0 ? (
+                    <FlatList
+                        data={this.state.post}
+                        keyExtractor={(post) => post.id.toString()}
+                        renderItem={({ item }) => <Post dataPost={item} {...this.props} />}
+                    />
+                ) : (
+                    <Text>No hay posteos</Text>
+                )}
+                <TouchableOpacity onPress={() => this.logOut()}>
+                    <Text>Cerrar Sesión</Text>
+                </TouchableOpacity>
+            </View>)
+    }
 }
