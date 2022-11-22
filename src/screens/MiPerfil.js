@@ -70,7 +70,7 @@ export default class MiPerfil extends Component {
                     <FlatList
                         data={this.state.post}
                         keyExtractor={(post) => post.id.toString()}
-                        renderItem={({ item }) => <Post dataPost={item} {...this.props} />}
+                        renderItem={({ item }) => <Post posteo={item} />}
                     />
                 ) : (
                     <Text>No hay posteos</Text>

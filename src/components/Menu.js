@@ -23,7 +23,6 @@ export default class  Menu extends Component{
                 <Tab.Screen name="NewPost" component={NewPost} options={{tabBarIcon:()=><MaterialIcons name="add-box" size={24} color="black" />}}/>
                 <Tab.Screen name="MiPerfil" component={MiPerfil} options={{tabBarIcon:()=><Ionicons name="person" size={24} color="black" />}}/>
                 <Tab.Screen name = "Busqueda" component ={Busqueda} options ={{tabBarIcon:()=><FontAwesome name="search" size={24} color="black" />}}/>
-                <Tab.Screen name = "Comentarios" component ={Comments} options ={{tabBarIcon:()=><FontAwesome name="comments" size={24} color="black" />}}/>
             </Tab.Navigator>
                
         )
