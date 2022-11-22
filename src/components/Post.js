@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
-import { Text, TextInput, View, TouchableOpacity, StyleSheet, LogBox } from 'react-native';
+import { Text, TextInput, TouchableOpacity, StyleSheet, Image,} from 'react-native';
 
 class Post extends Component {
 
@@ -24,7 +24,7 @@ class Post extends Component {
     agregarComentario(idDelPosteo){
         db.collection("posts")
         .doc(idDelPosteo).update({
-            comments:firebase.firestore.FieldValue.arrayUnion(this.state.comentario)
+            comments:firebase.firestore.FieldValue.arrayUnion({comments:this.state.comentario, owner:auth.currentUser.email})
         })
         .then(((res)=> {
             this.setState({
@@ -42,8 +42,16 @@ class Post extends Component {
     render(){
        
         return(
-            <View>
-            <Text>{this.props.posteo.descripcion}</Text>
+            <>
+
+            
+            <Image
+                style={style.image}
+                source={{uri: this.props.posteo.data.url }}
+                resizeMode='contain'
+                />
+            
+            <Text> {this.props.posteo.data.descripcion} </Text>
             <TouchableOpacity onPress={()=>{this.likear(this.props.posteo.id)}}>
                  <Text>Dar Like</Text>
              </TouchableOpacity>
@@ -54,14 +62,13 @@ class Post extends Component {
              onChangeText={text => this.setState({comentario: text})}
              value={this.state.comentario}
              />
-
              <TouchableOpacity onPress={()=> {this.agregarComentario(this.props.posteo.id)} } >
                 <Text>Comentar</Text>
              </TouchableOpacity>
-             <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Comentarios", {id:idDelPosteo})}}>
-                <Text>Comentarios</Text>
-             </TouchableOpacity>
-        </View>
+             
+
+
+        </>
         )
     }
 }
@@ -76,6 +83,15 @@ const style = StyleSheet.create ({
         marginVertical: 8,
         marginHorizontal: 16
         
+    },
+    image: {
+        width: 250,
+        height: 250,
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 
