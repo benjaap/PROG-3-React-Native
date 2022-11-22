@@ -34,7 +34,11 @@ class Post extends Component {
         .catch((err)=>console.log(err))
     }
 
-    
+    deletePost(){
+        let borrar = confirm( "¿Estas seguro? Si borras esta foto no podras recuperarla");
+        if (borrar){db.collection("posts").doc(this.props.posteo.id).delete();}
+    }
+
     render(){
        
         return(

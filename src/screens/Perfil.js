@@ -14,70 +14,45 @@ export default class Perfil extends Component {
         }
     }
 
-//     componentDidMount() {
-//         db.collection('users')
-//             .where('email', '==', auth.currentUser.email)
-//             .onSnapshot(
-//                 docs => {
-//                     let post = [];
-//                     docs.forEach(doc => {
-//                         post.push({
-//                             id: doc.id,
-//                             data: doc.data()
-//                         })
-//                         this.setState({
-//                             username: post[0].data.username,
-//                             loading: false
-//                         })
-//                     })
-//                 }
-//             )
+    componentDidMount() {
+        db.collection('posts')
+            .where('owner', '==', auth.currentUser.email)
+            .onSnapshot(
+                docs => {
+                    let post = [];
+                    docs.forEach(doc => {
+                        post.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                        this.setState({
+                            posts: post,
+                            loading: false
+                        })
+                    })
+                }
+            )
+    }
 
-//         db.collection('posts')
-//             .where('owner', '==', auth.currentUser.email)
-//             .onSnapshot(
-//                 docs => {
-//                     let post = [];
-//                     docs.forEach(doc => {
-//                         post.push({
-//                             id: doc.id,
-//                             data: doc.data()
-//                         })
-//                         this.setState({
-//                             posts: post,
-//                             loading: false
-//                         })
-//                     })
-//                 }
-//             )
-//     }
+    render() {
+        return (
+            <View>
+                <Text>PERFIL</Text>
 
-//     logOut() {
-//         auth.signOut();
-//         this.props.navigation.navigate("Register")
-//     }
-
-//     render() {
-//         return (
-//             <View>
-//                 <Text>MI PERFIL</Text>
-                
-//                 <Text>Usuario: {this.state.username}</Text>
-//                 <Text>Email: {auth.currentUser.email}</Text>
-//                 <Text>Tenes{this.state.post.lengthj} posteos</Text> 
-//                 <Text>Posteos:</Text>
-//                 {this.state.post.length > 0 ? (
-//                     <FlatList
-//                         data={this.state.post}
-//                         keyExtractor={(post) => post.id.toString()}
-//                         renderItem={({ item }) => <Post dataPost={item} {...this.props} />}
-//                     />
-//                 ) : (
-//                     <Text>No hay posteos</Text>
-//                 )}
-//                 <TouchableOpacity onPress={() => this.logOut()}>
-//                     <Text>Cerrar Sesión</Text>
-//                 </TouchableOpacity>
-//             </View>)
-//     }
+                <Text>Usuario: {this.state.username}</Text>
+                <Text>Email: {auth.currentUser.email}</Text>
+                <Text>Bio: {this.state.bio}</Text>
+                <Text>{this.state.post.lengthj} posteos</Text>
+                <Text>Posteos:</Text>
+                {this.state.post.length > 0 ? (
+                    <FlatList
+                        data={this.state.post}
+                        keyExtractor={(post) => post.id.toString()}
+                        renderItem={({ item }) => <Post dataPost={item} {...this.props} />}
+                    />
+                ) : (
+                    <Text>No hay posteos</Text>
+                )}
+            </View>)
+    }
 }
