@@ -12,7 +12,8 @@ export default class MiPerfil extends Component {
             email: '',
             username: '',
             post: [],
-            bio: ''
+            bio: '',
+            loading: true
         }
     }
 
@@ -36,56 +37,54 @@ export default class MiPerfil extends Component {
                 }
             )
 
-            db.collection('posts')
-                .where('owner', '==', auth.currentUser.email)
-                .onSnapshot(
-                    docs => {
-                        let post = [];
-                        docs.forEach(doc => {
-                            post.push({
-                                id: doc.id,
-                                data: doc.data()
-                            })
-                            this.setState({
-                                posts: post,
-                                loading: false
-                            })
+        db.collection('posts')
+            .where('owner', '==', auth.currentUser.email)
+            .onSnapshot(
+                docs => {
+                    let post = [];
+                    docs.forEach(doc => {
+                        post.push({
+                            id: doc.id,
+                            data: doc.data()
                         })
-                    }
-                    )     
-             
-            // db.collection("posts")
-            //     .doc("ID")
-            //     .delete()
-        }
-
-        logOut() {
-            auth.signOut();
-            this.props.navigation.navigate("Register")
-        }
-
-        render() {
-            return (
-                <View>
-                    <Text>MI PERFIL</Text>
-
-                    <Text>Usuario: {this.state.username}</Text>
-                    <Text>Email: {auth.currentUser.email}</Text>
-                    <Text>Bio: {this.state.bio}</Text>
-                    <Text>Tenes{this.state.post.lengthj} posteos</Text>
-                    <Text>Posteos:</Text>
-                    {this.state.post.length > 0 ? (
-                        <FlatList
-                            data={this.state.post}
-                            keyExtractor={(post) => post.id.toString()}
-                            renderItem={({ item }) => <Post dataPost={item} {...this.props} />}
-                        />
-                    ) : (
-                        <Text>No hay posteos</Text>
-                    )}
-                    <TouchableOpacity onPress={() => this.logOut()}>
-                        <Text>Cerrar Sesión</Text>
-                    </TouchableOpacity>
-                </View>)
-        }
+                        this.setState({
+                            post: post,
+                            loading: false
+                        })
+                    })
+                }
+            )
     }
+
+    logOut() {
+        auth.signOut();
+        this.props.navigation.navigate("Register")
+    }
+
+    render() {
+        return (
+            <View>
+                <Text>MI PERFIL</Text>
+
+                <Text>Usuario: {this.state.username}</Text>
+                <Text>Email: {auth.currentUser.email}</Text>
+                <Text>Bio: {this.state.bio}</Text>
+                <Text>Posteos:{this.state.post.length}</Text>
+                {this.state.post.length > 0 ? (
+                    <FlatList
+                        data={this.state.post}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) =>
+                        (
+                            <Post posteo={item} />
+                        )}
+                    />
+                ) : (
+                    <Text>No hay posteos</Text>
+                )}
+                <TouchableOpacity onPress={() => this.logOut()}>
+                    <Text>Cerrar Sesión</Text>
+                </TouchableOpacity>
+            </View>)
+    }
+}
