@@ -1,6 +1,9 @@
 import React, {Component} from "react";
-import {View, Text, TouchableOpacity, StyleSheet,Image} from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet,Image, FlatList} from "react-native";
 import{db, auth } from '../firebase/config';
+import Comment from '../components/Comment'
+
+
 export default class Comments extends Component{
 
     constructor(props){
@@ -11,15 +14,14 @@ export default class Comments extends Component{
         }
     }
     componentDidMount(){
-        db.collection("posts").onSnapshot(
-            docs=>{
+        db.collection("posts").onSnapshot(docs=>{
             let postsFromDb =[]
-            docs.forEach( doc => {
+            docs.forEach( (doc) => {
                 postsFromDb.push({
                     id: doc.id, 
                     data: doc.data()
                 })
-                console.log(postsFromDb);
+               /*console.log(postsFromDb);*/
                 this.setState({posteos:postsFromDb})
             })
         })
@@ -29,12 +31,36 @@ export default class Comments extends Component{
 
 
     render(){
-        console.log(this.props)
-        console.log(this.state.posteos)
+        /*console.log(this.props.route.params.id)
+        console.log(this.state.posteos)*/
+       
         
 
         return(
-            <Text>Comentarios</Text>
+            <>
+            <FlatList  
+                    data={this.state.posteos}
+                    keyExtrator={item => item.id.toString()}
+                    renderItem={({item})=>
+                    ( 
+                        <Comment
+                        info={item.data.comments}
+                        match={this.props.route.params.id}
+                        
+                        
+
+                        />
+                    )}
+                    />
+            
+            
+            
+
+
+
+            </>
         )
     }
 }
+
+

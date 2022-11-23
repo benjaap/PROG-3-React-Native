@@ -24,7 +24,7 @@ class Post extends Component {
     agregarComentario(idDelPosteo) {
         db.collection("posts")
             .doc(idDelPosteo).update({
-                comments: firebase.firestore.FieldValue.arrayUnion({ comments: this.state.comentario, owner: auth.currentUser.email })
+                comments: firebase.firestore.FieldValue.arrayUnion({ comment: this.state.comentario, owner: auth.currentUser.email })
             })
             .then(((res) => {
                 this.setState({
@@ -66,7 +66,10 @@ class Post extends Component {
                 <TouchableOpacity onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
                     <Text>Comentar</Text>
                 </TouchableOpacity>
-                <Text onPress={() => this.props.navegacion.navigate('Comentarios', {id: this.props.posteo.id } )}>Comentarios</Text>
+                <TouchableOpacity onPress={() => this.props.navegacion.navigate('Comentarios', {id: this.props.posteo.id } )} >
+                    <Text>Mas Comentarios</Text>
+                </TouchableOpacity>
+                
 
 
 
