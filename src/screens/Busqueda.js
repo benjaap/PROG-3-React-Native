@@ -72,7 +72,12 @@ export default class Busqueda extends Component {
                   keyExtractor={ item => item.id.toString() }
                   renderItem={ ({item}) => (
                       <View>
-                      <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
+                      <TouchableOpacity onPress={()=>{this.props.navigation.navigate("PerfilBusqueda", {
+                        username: item.data.username,
+                        email:item.data.email,
+                        bio:item.data.bio,
+
+                         })}}>
                          <Text>{item.data.username}</Text>
                        </TouchableOpacity>
                       </View>
@@ -84,7 +89,11 @@ export default class Busqueda extends Component {
                 keyExtractor={ item => item.id.toString() }
                 renderItem={ ({item}) => (
                     <View>
-                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
+                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate("PerfilBusqueda", 
+                    {username: item.data.username,
+                        email:item.data.email,
+                        bio:item.data.bio,
+})}}>
                        <Text>{item.data.username}</Text>
                      </TouchableOpacity>
                     </View>

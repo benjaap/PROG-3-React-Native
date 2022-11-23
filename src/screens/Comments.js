@@ -36,7 +36,17 @@ export default class Comments extends Component{
 
         return(
             <>
-            <Text>Hola mundo</Text>
+            <FlatList
+            data={this.state.comment}
+            keyExtrator={item => item.id.toString()}
+            render={({item}) => (
+                <>
+                </>
+
+
+
+            )}
+            />
 
             </>
         )

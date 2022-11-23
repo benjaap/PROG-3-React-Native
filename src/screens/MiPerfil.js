@@ -56,6 +56,13 @@ export default class MiPerfil extends Component {
             )
     }
 
+    delete(id) {
+        let deletePost = db
+            .collection('posts')
+            .doc(id)
+            deletePost.delete()
+    }
+
     logOut() {
         auth.signOut();
         this.props.navigation.navigate('Register')
@@ -74,9 +81,13 @@ export default class MiPerfil extends Component {
                     <FlatList
                         data={this.state.post}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) =>
-                        (
-                            <Post posteo={item} />
+                        renderItem={({ item }) =>(
+                            <>
+                                <Post posteo={item} />
+                                <TouchableOpacity onPress={() => this.delete(item.id)}>
+                                <text>Borrar Posteo</text>
+                                </TouchableOpacity>
+                            </>
                         )}
                     />
                 ) : (
