@@ -16,7 +16,7 @@ export default class Perfil extends Component {
 
     componentDidMount() {
         db.collection('posts')
-            .where('owner', '==', auth.currentUser.email)
+            .where('owner', '==', this.props.route.params.username)
             .onSnapshot(
                 docs => {
                     let post = [];
@@ -32,6 +32,26 @@ export default class Perfil extends Component {
                     })
                 }
             )
+
+        db.collection('users')
+            .where('username', '==', this.props.route.params.username)
+            .onSnapshot(
+                docs => {
+                    let userA = {};
+                    docs.forEach(doc => {
+                        let username = doc.data()
+                        userA = {
+                            id: doc.id,
+                            data: username
+                        }
+                    })
+
+                    this.setState({
+                        username: userA,
+                        loading: false
+                    })
+                })
+
     }
 
     render() {
@@ -42,13 +62,19 @@ export default class Perfil extends Component {
                 <Text>Usuario: {this.state.username}</Text>
                 <Text>Email: {auth.currentUser.email}</Text>
                 <Text>Bio: {this.state.bio}</Text>
-                <Text>{this.state.post.lengthj} posteos</Text>
-                <Text>Posteos:</Text>
+                <Text>Posteos:{this.state.post.length}</Text>
                 {this.state.post.length > 0 ? (
                     <FlatList
                         data={this.state.post}
-                        keyExtractor={(post) => post.id.toString()}
-                        renderItem={({ item }) => <Post dataPost={item} {...this.props} />}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) =>(
+                            <>
+                                <Post posteo={item} />
+                                <TouchableOpacity onPress={() => this.delete(item.id)}>
+                                <text>Borrar Posteo</text>
+                                </TouchableOpacity>
+                            </>
+                        )}
                     />
                 ) : (
                     <Text>No hay posteos</Text>
