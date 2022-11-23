@@ -9,58 +9,50 @@ export default class Comments extends Component{
     constructor(props){
         super(props)
         this.state={
-            posteos : [],
+            comment :[],
            
         }
     }
     componentDidMount(){
-        db.collection("posts").onSnapshot(docs=>{
-            let postsFromDb =[]
-            docs.forEach( (doc) => {
-                postsFromDb.push({
-                    id: doc.id, 
-                    data: doc.data()
-                })
-               /*console.log(postsFromDb);*/
-                this.setState({posteos:postsFromDb})
+        db.collection("posts")
+        .doc(this.props.route.params.id)
+        .onSnapshot( doc => {
+            this.setState({
+                comment: doc.data().comments
             })
-        })
+            console.log(this.state.comment)
+        }
+
+        )
+
+
+
     }
-   
-
-
-
     render(){
-        /*console.log(this.props.route.params.id)
-        console.log(this.state.posteos)*/
+        console.log(this.props.route.params.id)
+        
        
         
 
         return(
             <>
-            <FlatList  
-                    data={this.state.posteos}
-                    keyExtrator={item => item.id.toString()}
-                    renderItem={({item})=>
-                    ( 
-                        <Comment
-                        info={item.data.comments}
-                        match={this.props.route.params.id}
-                        
-                        
-
-                        />
-                    )}
-                    />
-            
-            
-            
-
-
+            <Text>Hola mundo</Text>
 
             </>
         )
     }
 }
 
-
+ /*<FlatList  
+                    data={this.state.posteos}
+                    keyExtrator={item => item.id.toString()}
+                    renderItem={({item})=>
+                    (  
+                        <Comment
+                        info={item.data.comments}
+                        match={this.props.route.params.id}
+                        codigo={item.id}
+                    
+                        />
+                    )}
+                    />*/

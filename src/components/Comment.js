@@ -23,7 +23,7 @@ class Comment extends Component {
 
     render() {
         console.log(this.state.datos)
-        console.log(this.props.match)
+        console.log(this.props.codigo)
 
         return (
             <>
