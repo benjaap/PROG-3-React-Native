@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { auth, db } from '../firebase/config';
 import { Text, TextInput, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import Post from '../components/Post';
+import firebase from 'firebase';
 
 export default class MiPerfil extends Component {
 
@@ -11,6 +12,8 @@ export default class MiPerfil extends Component {
             email: '',
             username: '',
             post: [],
+            bio: '',
+            loading: true
         }
     }
 
@@ -27,6 +30,7 @@ export default class MiPerfil extends Component {
                         })
                         this.setState({
                             username: post[0].data.username,
+                            bio: post[0].data.bio,
                             loading: false
                         })
                     })
@@ -44,7 +48,7 @@ export default class MiPerfil extends Component {
                             data: doc.data()
                         })
                         this.setState({
-                            posts: post,
+                            post: post,
                             loading: false
                         })
                     })
@@ -61,16 +65,19 @@ export default class MiPerfil extends Component {
         return (
             <View>
                 <Text>MI PERFIL</Text>
-                
+
                 <Text>Usuario: {this.state.username}</Text>
                 <Text>Email: {auth.currentUser.email}</Text>
-                <Text>Tenes{this.state.post.lengthj} posteos</Text> 
-                <Text>Posteos:</Text>
+                <Text>Bio: {this.state.bio}</Text>
+                <Text>Posteos:{this.state.post.length}</Text>
                 {this.state.post.length > 0 ? (
                     <FlatList
                         data={this.state.post}
-                        keyExtractor={(post) => post.id.toString()}
-                        renderItem={({ item }) => <Post posteo={item} />}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) =>
+                        (
+                            <Post posteo={item} />
+                        )}
                     />
                 ) : (
                     <Text>No hay posteos</Text>
