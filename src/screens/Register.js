@@ -17,8 +17,6 @@ class Register extends Component {
             post: '',
             bio: '',
 
-
-
         }
     }
 
@@ -56,6 +54,8 @@ class Register extends Component {
 
 
     render() {
+        console.log(this.props.navigation)
+        
         return (
             <>
                 <View>

@@ -31,6 +31,8 @@ class Home extends Component{
    
     render(){
         
+
+        
        
         return(
              <>
@@ -39,7 +41,10 @@ class Home extends Component{
                     keyExtrator={item => item.id.toString()}
                     renderItem={({item})=>
                     ( 
-                        <Post posteo={item}/> 
+                        <Post 
+                        posteo={item}
+                        navegacion={this.props.navigation}
+                        /> 
                     )}
                     />
             </>

@@ -16,7 +16,6 @@ const Tab = createBottomTabNavigator()
 
 export default class  Menu extends Component{
     render(){
-        console.log(this.props.route.params)
         return (
             <Tab.Navigator>
                 <Tab.Screen name="Home" component={Home} options={{tabBarIcon:()=><FontAwesome name="home" size={24} color="black" />}}/>
