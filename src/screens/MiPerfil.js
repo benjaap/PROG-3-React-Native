@@ -94,6 +94,11 @@ export default class MiPerfil extends Component {
                 ) : (
                     <Text>No hay posteos</Text>
                 )}
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('EditPerfil')}>
+                    <Text>EDITAR PERFIL</Text>
+                </TouchableOpacity>
+
+
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('LogOut')}>
                     <Text>Cerrar Sesión</Text>
                 </TouchableOpacity>
