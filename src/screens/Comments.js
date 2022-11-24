@@ -1,69 +1,61 @@
-import React, {Component} from "react";
-import {View, Text, TouchableOpacity, StyleSheet,Image, FlatList} from "react-native";
-import{db, auth } from '../firebase/config';
-import Comment from '../components/Comment'
+import React, { Component } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from "react-native";
+import { db, auth } from '../firebase/config';
 
 
-export default class Comments extends Component{
 
-    constructor(props){
+export default class Comments extends Component {
+
+    constructor(props) {
         super(props)
-        this.state={
-            comment :[],
-           
+        this.state = {
+            comment: [],
+
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         db.collection("posts")
-        .doc(this.props.route.params.id)
-        .onSnapshot( doc => {
-            this.setState({
-                comment: doc.data().comments
-            })
-            console.log(this.state.comment)
-        }
+            .doc(this.props.route.params.id)
+            .onSnapshot(doc => {
+                this.setState({
+                    comment: doc.data().comments
+                })
+                console.log(this.state.comment)
+            }
 
-        )
+            )
 
 
 
     }
-    render(){
+    render() {
         console.log(this.props.route.params.id)
-        
-       
-        
 
-        return(
+        return (
             <>
-            <FlatList
-            data={this.state.comment}
-            keyExtrator={item => item.id.toString()}
-            renderItem={({item}) => (
-                <>
-                <Text>{item.comment}</Text>
-                </>
+                <FlatList
+                    data={this.state.comment}
+                    keyExtractor={item => item.createdAt}
+                    renderItem={({ item }) => (
+                        <View>
+                            {auth.currentUser.email === item.owner ? (
+                                <>
+                                    <Text>Comentaste: </Text>
+                                    <Text>{item.comment}</Text>
+                                </>
+                            ) : (
+                                <>
+                                    <Text>{item.owner} comento: </Text>
+                                    <Text>{item.comment}</Text>
+                                </>)
+                            }
+                        </View>
 
-
-
-            )}
-            />
+                    )}
+                />
 
             </>
         )
     }
 }
 
- /*<FlatList  
-                    data={this.state.posteos}
-                    keyExtrator={item => item.id.toString()}
-                    renderItem={({item})=>
-                    (  
-                        <Comment
-                        info={item.data.comments}
-                        match={this.props.route.params.id}
-                        codigo={item.id}
-                    
-                        />
-                    )}
-                    />*/

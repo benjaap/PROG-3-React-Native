@@ -22,6 +22,14 @@ class Post extends Component {
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
     }
+    dislike(idDelPosteo){
+        db.collection("posts").doc(idDelPosteo).update({
+            likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+        })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+
+    }
 
     agregarComentario(idDelPosteo) {
         db.collection("posts")
