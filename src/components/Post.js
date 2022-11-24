@@ -91,6 +91,7 @@ class Post extends Component {
 
 const style = StyleSheet.create({
     comment: {
+       
         fontSize: 15,
         borderColor: 'black',
         borderWidth: 1,
@@ -101,7 +102,6 @@ const style = StyleSheet.create({
         backgroundColor: "#EEEFEF",
         width: "fit-content"
     },
-
     image: {
         display: "inline-block",
         margin: "auto",

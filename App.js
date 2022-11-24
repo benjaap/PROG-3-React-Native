@@ -47,7 +47,7 @@ export default function App() {
         <Stack.Screen name='Comentarios' component={Comentarios}/>
         <Stack.Screen name = "PerfilBusqueda" component={PerfilBusqueda}/>
         <Stack.Screen name='LogOut' component={ LogOut }     />
-
+       
       </Stack.Navigator>
       
     </NavigationContainer>

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { db, auth } from '../firebase/config';
+import { db, auth, storage } from '../firebase/config';
 import firebase from "firebase";
+import * as ImagePicker from 'expo-image-picker';
 
 class Register extends Component {
     constructor(props) {
@@ -10,14 +11,15 @@ class Register extends Component {
             email: '',
             password: '',
             username: '',
-            err: '',
             post: '',
             bio: '',
             error: {
                 email: '',
                 password: '',
                 username:''
-            }
+            },
+            showCamera:true,
+            image:'',
         }
     }
 
@@ -40,28 +42,73 @@ class Register extends Component {
         }
         this.setState({ error: { email: '', password: '', username:'' } })
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((res) => {
-                db.collection('users').add({
-                    email: email,
-                    username: username,
-                    bio: bio,
+        //Hago el fetch para sacar la imagen
+        // fetch(this.state.image)
+        // .then(res=>res.blob())
+        // .then(image=>{
+        //     const ref = storage.ref(`perfil/${Date.now()}.jpg`)
+        //     ref.put(image)
+        //     .then(()=>{
+        //         ref.getDownloadURL()
+        //         .then(()=>{
+        //             this.onImageUpload(image)
 
-                })
-                    .then((res) => {
-                        this.setState({
-                            email: "",
-                            password: "",
-                            username: "",
-                            bio: "",
-                        });
-                        this.props.navigation.navigate("Menu");
-                    })
-            }
+        //         })
+        //     })
+        // })
+        // .catch(err => console.log(err))
+
+        auth.createUserWithEmailAndPassword(email, password)
+        .then( (res)=> {
+            db.collection('users').add ({
+                email: email,
+                username: username,
+                bio: bio,
+                post:[],
+                image:image
+                
+            })   
+            /* res.user.updateProfile({
+                displayName: username,
+            }) */
+            .then((res)=> {
+                this.setState({
+                    email: "",
+                    password: "",
+                    username: "",
+                    bio:"",
+                    image:""
+                });
+                this.props.navigation.navigate("Login");
+            }) }
             )
             .catch(err => this.setState({ err: err.message }))
 
+        
+    }
+    onImageUpload(image){
+        this.setState({image: image}, () => {console.log(this.state.image)}
+        ) 
+    }
 
+	image(){
+        ImagePicker.getMediaLibraryPermissionsAsync() 
+        .then(()=>this.setState({
+            permission: true
+        }))
+        .catch(error =>console.log(error))
+        
+        let image = ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        })
+        .then((res) => {
+            if (!image.cancelled) {
+                // this.setState({image: res.assets[0].uri})     
+            }
+        })
     }
 
     render() {
@@ -111,12 +158,28 @@ class Register extends Component {
                         value={this.state.bio}
                         onChangeText={bio => this.setState({ bio: bio })}
                     />
+                    <TouchableOpacity 
+                        style={style.campo}
+                        onPress={()=>{this.image()}}>
+                        <Text>Elegí tu foto de perfil</Text>
+                    </TouchableOpacity>
+
                 </View>
                 <View>
+                 {this.state.email.length == 0 || this.state.password.length == 0 || this.state.username.length == 0?
 
-                    <TouchableOpacity onPress={() => { this.register(this.state.email, this.state.password, this.state.username, this.state.bio, this.state.post) }}>
+                    <TouchableOpacity onPress={() => { this.register(this.state.email, this.state.password, this.state.username, this.state.bio, this.state.post, this.state.image) }}>
                         <Text>Registrame</Text>
                     </TouchableOpacity>
+                     :
+
+                     <TouchableOpacity 
+                         onPress={()=>{this.register(this.state.email, this.state.password, this.state.username, this.state.bio, this.state.image)}}
+                         style={style.button}
+                     >
+                         <Text style={style.buttonText}>Registrarme</Text>
+                     </TouchableOpacity>
+                     }
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
                         <Text> Ya tengo una cuenta</Text>
                     </TouchableOpacity>
@@ -124,10 +187,6 @@ class Register extends Component {
                 </View>
             </>
         );
-
-
-
-
     }
 }
 
