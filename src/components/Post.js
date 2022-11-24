@@ -67,15 +67,21 @@ class Post extends Component {
                     <Text style={style.comment}>Dar Like ❤️</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
+                <View style={style.comentar}>
                 <TextInput
-                    style={style.comment}
-                    keyboardType='default'
-                    placeholder='Haz un comentario     🖋️' 
-                    onChangeText={text => this.setState({ comentario: text })}
-                    value={this.state.comentario}
-                />
-                </TouchableOpacity>
+                        
+                        style={style.comment}
+                        keyboardType='default'
+                        placeholder='Haz un comentario ' 
+                        onChangeText={text => this.setState({ comentario: text })}
+                        value={this.state.comentario}
+                />   
+                    <TouchableOpacity  onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
+                               
+                         <Text style={style.comment}>🖋️</Text>
+                
+                    </TouchableOpacity>
+                </View>
                 <TouchableOpacity style={style.comment} onPress={() => this.props.navegacion.navigate('Comentarios', {id: this.props.posteo.id } )} >
                     <Text>Ver Más Comentarios  </Text>
                 </TouchableOpacity>
@@ -90,6 +96,7 @@ class Post extends Component {
 
 const style = StyleSheet.create({
     comment: {
+       
         fontSize: 15,
         borderColor: 'black',
         borderWidth: 1,
@@ -100,7 +107,9 @@ const style = StyleSheet.create({
         backgroundColor:"#EEEFEF",
         width:"fit-content"
     },
-    
+    comentar:{
+        display:"block",
+    },
     image: {
         display: "inline-block",
         margin:"auto",
