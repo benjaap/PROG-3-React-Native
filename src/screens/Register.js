@@ -21,7 +21,7 @@ class Register extends Component {
     }
 
     componentDidMount(){
-        auth.onAuthStateChanged((user)=> {this.props.navigation.navigate("Menu")})
+        auth.onAuthStateChanged((user)=> {this.props.navigation.navigate('Menu')})
     }
 
     
@@ -79,7 +79,7 @@ class Register extends Component {
                     />
                     <TextInput
                         style={style.campo}
-                        placeholder=' Nombre de Usuario'
+                        placeholder='Nombre de Usuario'
                         keyboardType="default"
                         value={this.state.username}
                         onChangeText={username => this.setState({ username: username })}

@@ -65,7 +65,7 @@ export default class MiPerfil extends Component {
 
     logOut() {
         auth.signOut();
-        this.props.navigation.navigate('Register')
+        this.props.navigation.navigate('Login')
     }
 
     render() {
@@ -93,7 +93,7 @@ export default class MiPerfil extends Component {
                 ) : (
                     <Text>No hay posteos</Text>
                 )}
-                <TouchableOpacity onPress={() => this.logOut()}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('LogOut')}>
                     <Text>Cerrar Sesión</Text>
                 </TouchableOpacity>
             </View>)

@@ -39,8 +39,9 @@ export default class Comments extends Component{
             <FlatList
             data={this.state.comment}
             keyExtrator={item => item.id.toString()}
-            render={({item}) => (
+            renderItem={({item}) => (
                 <>
+                <Text>{item.comment}</Text>
                 </>
 
 
