@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { db, auth, storage } from '../firebase/config';
 import firebase from "firebase";
-
 import * as ImagePicker from 'expo-image-picker';
-
-
-
 
 class Register extends Component {
     constructor(props) {
@@ -15,74 +11,53 @@ class Register extends Component {
             email: '',
             password: '',
             username: '',
-            // err: {
-            //     email:"",
-            //     username:"",
-            //     password:""
-            // },
             post: '',
             bio: '',
+            error: {
+                email: '',
+                password: '',
+                username:''
+            },
             showCamera:true,
             image:'',
         }
     }
 
-    componentDidMount(){
-        auth.onAuthStateChanged((user)=> {this.props.navigation.navigate('Menu')})
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => { this.props.navigation.navigate('Menu') })
     }
 
-    register(email,password,username,bio,image){ 
-        //Seteo errores para que sea obligatorio ciertos campos
-
-        /* if (this.state.username.length == 0 && this.state.email.length == 0  && this.state.password.length == 0){
-            this.setState({err: {email:'ingrese email', username:'ingrese nombre', password: 'ingrese contraseña'}})
-            return
-
-        }else if(this.state.username.length == 0 && this.state.email.length == 0 ) {
-            this.setState({err: {email:'ingrese email', username:'ingrese nombre', password:''}})
-            return
-
-        }else if (this.state.username.length == 0 && this.state.password.length == 0 ){
-            this.setState({err: {email:'', username:'ingrese nombre', password:'ingrese contraseña'}})
-            return
-
-        } else if (this.state.email.length == 0 && this.state.password.length == 0 ){
-            this.setState({err: {email:'ingrese email', username:'', password:'ingrese contraseña'}})
-            return
-
-        } else if (this.state.email.length == 0){
-            this.setState({err: {email:'ingrese email', userName:'', pass:''}})
-            return
-
-        } else if (this.state.password.length == 0 ){
-            this.setState({err: {email:'', username:'', password:'ingrese contraseña'}})
-            return
-
-        } else if (this.state.username.length == 0){
-            this.setState({err: {email:'', username:'ingrese nombre', password:''}})
+    register(email, password, username, bio, post) {
+        if (this.state.email.length == 0) {
+            this.setState({ error: { email: 'Tenes que ingresar tu email', password: '', username: '' } })
             return
         }
-
-        this.setState({err:{email:'', username:'', password:''}}) */
+        else if (this.state.password.length == 0) {
+            this.setState({ error: { email: '', password: 'Tenes que ingresar tu contraseña', username: '' } })
+            return
+        }
+        else if (this.state.username.length == 0) {
+            this.setState({ error: { email: '', password: '', username: 'Ingresa un nombre de usuario' } })
+            return
+        }
+        this.setState({ error: { email: '', password: '', username:'' } })
 
         //Hago el fetch para sacar la imagen
-        fetch(this.state.image)
-        .then(res=>res.blob())
-        .then(image=>{
-            const ref = storage.ref(`perfil/${Date.now()}.jpg`)
-            ref.put(image)
-            .then(()=>{
-                ref.getDownloadURL()
-                .then(()=>{
-                    this.onImageUpload(image)
+        // fetch(this.state.image)
+        // .then(res=>res.blob())
+        // .then(image=>{
+        //     const ref = storage.ref(`perfil/${Date.now()}.jpg`)
+        //     ref.put(image)
+        //     .then(()=>{
+        //         ref.getDownloadURL()
+        //         .then(()=>{
+        //             this.onImageUpload(image)
 
-                })
-            })
-        })
-        .catch(err => console.log(err))
+        //         })
+        //     })
+        // })
+        // .catch(err => console.log(err))
 
-
-   
         auth.createUserWithEmailAndPassword(email, password)
         .then( (res)=> {
             db.collection('users').add ({
@@ -107,9 +82,9 @@ class Register extends Component {
                 this.props.navigation.navigate("Login");
             }) }
             )
-            .catch(err => this.setState({err: err.message}) )
+            .catch(err => this.setState({ err: err.message }))
 
-
+        
     }
     onImageUpload(image){
         this.setState({image: image}, () => {console.log(this.state.image)}
@@ -136,12 +111,9 @@ class Register extends Component {
         })
     }
 
-   
-
-
     render() {
         console.log(this.props.navigation)
-        
+
         return (
             <>
                 <View>
@@ -155,8 +127,8 @@ class Register extends Component {
                         onChangeText={userEmail => this.setState({ email: userEmail })}
                         value={this.state.email}
                     />
-                     <Text style={style.errorText}>
-                        {/* {this.state.err.email && 'La dirección de email es obligatoria'} */}
+                    <Text>
+                        {this.state.error.email && 'Tenes que ingresar una direccion de email'}
                     </Text>
                     <TextInput
                         style={style.campo}
@@ -164,11 +136,11 @@ class Register extends Component {
                         keyboardType="default"
                         secureTextEntry='true'
                         value={this.state.password}
-                        onChangeText={password => this.setState({ password: password})}
+                        onChangeText={password => this.setState({ password: password })}
                     />
-                      <Text style={style.errorText}>
-                            {/* {this.state.err.pasword && 'La contraseña es obligatoria'} */}
-                      </Text>
+                    <Text>
+                        {this.state.error.password && 'Tenes que ingresar una contraseña'}
+                    </Text>
                     <TextInput
                         style={style.campo}
                         placeholder='Nombre de Usuario'
@@ -176,8 +148,8 @@ class Register extends Component {
                         value={this.state.username}
                         onChangeText={username => this.setState({ username: username })}
                     />
-                    <Text style={style.errorText}>
-                        {/* {this.state.err.username && 'El nombre de usuario es obligatorio'} */}
+                    <Text>
+                        {this.state.error.username && 'Tenes que ingresar una nombre de usuario'}
                     </Text>
                     <TextInput
                         style={style.campo}
@@ -215,14 +187,10 @@ class Register extends Component {
                 </View>
             </>
         );
-
-
-
-
     }
 }
 
-const style = StyleSheet.create ({
+const style = StyleSheet.create({
     campo: {
         fontSize: 18,
         borderColor: 'red',
@@ -231,7 +199,7 @@ const style = StyleSheet.create ({
         borderRadius: 5,
         marginVertical: 8,
         marginHorizontal: 16
-        
+
     }
 
 
