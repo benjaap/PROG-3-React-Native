@@ -9,7 +9,8 @@ export default class MyCamera extends Component {
         this.state = {
             permission: false,
             showCamera: true,
-            uri: ""
+            uri: "",
+          
         }
         this.metodosDeCamara = ''
     }
@@ -47,7 +48,7 @@ export default class MyCamera extends Component {
                 })
             .catch(error =>console.log(error))
     }
-
+    
     clearFoto(){
         this.setState({
             uri:"",
