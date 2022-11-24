@@ -35,13 +35,10 @@ export default class Comments extends Component{
             <>
             <FlatList
             data={this.state.comment}
-            keyExtrator={item => item.createdAt}
+            keyExtractor={item => item.createdAt}
             renderItem={({item}) => (
-                <>
+
                 <Text>{item.comment}</Text>
-                </>
-
-
 
             )}
             />
