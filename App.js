@@ -7,6 +7,7 @@ import Login from './src/screens/Login';
 import Menu from "./src/components/Menu";
 import Comentarios from "./src/screens/Comments"
 import PerfilBusqueda from './src/screens/PerfilBusqueda';
+import LogOut from './src/screens/LogOut'
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -18,6 +19,8 @@ export default function App() {
         <Stack.Screen name='Menu' component={Menu}/>
         <Stack.Screen name='Comentarios' component={Comentarios}/>
         <Stack.Screen name = "PerfilBusqueda" component={PerfilBusqueda}/>
+        <Stack.Screen name='LogOut' component={ LogOut }     />
+
       </Stack.Navigator>
       
     </NavigationContainer>
