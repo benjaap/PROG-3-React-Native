@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
-import { Text, TextInput, TouchableOpacity, StyleSheet, Image, View} from 'react-native';
+import { Text, TextInput, TouchableOpacity, StyleSheet, Image, View } from 'react-native';
 import { BottomTabBarHeightCallbackContext } from '@react-navigation/bottom-tabs';
 import { AutoFocus } from 'expo-camera';
 import { FontAwesome } from '@expo/vector-icons';
@@ -22,7 +22,7 @@ class Post extends Component {
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
     }
-    dislike(idDelPosteo){
+    dislike(idDelPosteo) {
         db.collection("posts").doc(idDelPosteo).update({
             likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
         })
@@ -44,13 +44,13 @@ class Post extends Component {
             .catch((err) => console.log(err))
     }
 
-    deletePost(){
-        let borrar = confirm( "¿Estas seguro? Si borras esta foto no podras recuperarla");
-        if (borrar){db.collection("posts").doc(this.props.posteo.id).delete();}
+    deletePost() {
+        let borrar = confirm("¿Estas seguro? Si borras esta foto no podras recuperarla");
+        if (borrar) { db.collection("posts").doc(this.props.posteo.id).delete(); }
     }
 
-    render(){
-       
+    render() {
+
 
         return (
             <View style={style.container}>
@@ -62,24 +62,25 @@ class Post extends Component {
                     resizeMode='contain'
                 />
                 <Text style={style.descripcion}><strong>{this.props.posteo.data.owner}:</strong> {this.props.posteo.data.descripcion} </Text>
-                <TouchableOpacity  onPress={() => { this.likear(this.props.posteo.id) } }>
-                
+                <TouchableOpacity onPress={() => { this.likear(this.props.posteo.id) }}>
+
                     <Text style={style.comment}>Dar Like ❤️</Text>
                 </TouchableOpacity>
-                
-                <TouchableOpacity onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
                 <TextInput
                     style={style.comment}
                     keyboardType='default'
-                    placeholder='Haz un comentario     🖋️' 
+                    placeholder='Haz un comentario     🖋️'
                     onChangeText={text => this.setState({ comentario: text })}
                     value={this.state.comentario}
                 />
+
+                <TouchableOpacity onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
+                    <Text>Subir comentario</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={style.comment} onPress={() => this.props.navegacion.navigate('Comentarios', {id: this.props.posteo.id } )} >
+                <TouchableOpacity style={style.comment} onPress={() => this.props.navegacion.navigate('Comentarios', { id: this.props.posteo.id })} >
                     <Text>Ver Más Comentarios  </Text>
                 </TouchableOpacity>
-                
+
 
 
 
@@ -95,26 +96,26 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderRadius: 5,
-        marginTop:10,
-        marginLeft:40,
-        backgroundColor:"#EEEFEF",
-        width:"fit-content"
+        marginTop: 10,
+        marginLeft: 40,
+        backgroundColor: "#EEEFEF",
+        width: "fit-content"
     },
-    
+
     image: {
         display: "inline-block",
-        margin:"auto",
+        margin: "auto",
         width: 250,
         height: 220,
     },
-    descripcion:{
-        fontSize:15,
-        borderColor:"black",
-        textAlign:'left',
-        backgroundColor:"#fff",
-        width:250,
-        marginTop:10,
-        marginLeft:40,
+    descripcion: {
+        fontSize: 15,
+        borderColor: "black",
+        textAlign: 'left',
+        backgroundColor: "#fff",
+        width: 250,
+        marginTop: 10,
+        marginLeft: 40,
 
     },
     container: {
@@ -122,8 +123,8 @@ const style = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
         backgroundColor: "white",
-        margin:20,
-        padding:10
+        margin: 20,
+        padding: 10
 
     }
 
