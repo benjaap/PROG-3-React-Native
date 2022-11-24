@@ -31,14 +31,11 @@ export default class Comments extends Component{
     render(){
         console.log(this.props.route.params.id)
         
-       
-        
-
         return(
             <>
             <FlatList
             data={this.state.comment}
-            keyExtrator={item => item.id.toString()}
+            keyExtrator={item => item.createdAt}
             renderItem={({item}) => (
                 <>
                 <Text>{item.comment}</Text>
@@ -54,16 +51,4 @@ export default class Comments extends Component{
     }
 }
 
- /*<FlatList  
-                    data={this.state.posteos}
-                    keyExtrator={item => item.id.toString()}
-                    renderItem={({item})=>
-                    (  
-                        <Comment
-                        info={item.data.comments}
-                        match={this.props.route.params.id}
-                        codigo={item.id}
-                    
-                        />
-                    )}
-                    />*/
+ 
