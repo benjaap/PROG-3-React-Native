@@ -24,7 +24,7 @@ class Post extends Component {
     agregarComentario(idDelPosteo) {
         db.collection("posts")
             .doc(idDelPosteo).update({
-                comments: firebase.firestore.FieldValue.arrayUnion({ comment: this.state.comentario, owner: auth.currentUser.email })
+                comments: firebase.firestore.FieldValue.arrayUnion({ comment: this.state.comentario, owner: auth.currentUser.email, createdAt: Date.now() })
             })
             .then(((res) => {
                 this.setState({

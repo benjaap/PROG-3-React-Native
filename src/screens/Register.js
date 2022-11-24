@@ -21,7 +21,7 @@ class Register extends Component {
     }
 
     componentDidMount(){
-        auth.onAuthStateChanged((user)=> {this.props.navigation.navigate("Menu")})
+        auth.onAuthStateChanged((user)=> {this.props.navigation.navigate('Menu')})
     }
 
     
