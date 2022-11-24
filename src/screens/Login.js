@@ -8,10 +8,24 @@ class Login extends Component {
     this.state = {
       email: '',
       pass: '',
+      error: {
+        email:'',
+        pass:''
+      }
     };
   }
 
   loginUser(email, pass) {
+    if(this.state.email.length == 0){
+      this.setState({error: {email: 'Tenes que ingresar tu email', pass: ''}})
+      return
+    }
+    else if(this.state.pass.length == 0){
+      this.setState({error: {email: '', pass: 'Tenes que ingresar tu contraseña'}})
+      return
+    }
+    this.setState({error:{email:'', pass:''}})
+
     auth
       .signInWithEmailAndPassword(email, pass) 
       .then((res) => {
@@ -32,6 +46,9 @@ class Login extends Component {
           onChangeText={(text) => this.setState({ email: text })}   
           value={this.state.email}    
         />
+        <Text>
+          {this.state.error.email && 'Tenes que ingresar tu email'}
+        </Text>
 
         <TextInput
           style={style.form}
@@ -41,6 +58,9 @@ class Login extends Component {
           onChangeText={(text) => this.setState({ pass: text })}
           value={this.state.pass}
         />
+        <Text>
+          {this.state.error.pass && 'Tenes que ingresar tu contraseña'}
+        </Text>
 
         <TouchableOpacity>     
           <Text style={style.campo} onPress={() => this.loginUser(this.state.email, this.state.pass)}>Loguearme</Text>    
