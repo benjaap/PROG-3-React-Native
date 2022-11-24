@@ -61,6 +61,7 @@ export default class MiPerfil extends Component {
             .collection('posts')
             .doc(id)
             deletePost.delete()
+            
     }
 
     logOut() {
@@ -85,7 +86,7 @@ export default class MiPerfil extends Component {
                             <>
                                 <Post posteo={item} />
                                 <TouchableOpacity onPress={() => this.delete(item.id)}>
-                                <text>Borrar Posteo</text>
+                                <Text>Borrar Posteo</Text>
                                 </TouchableOpacity>
                             </>
                         )}
