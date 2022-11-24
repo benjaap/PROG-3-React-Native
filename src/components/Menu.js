@@ -17,11 +17,12 @@ const Tab = createBottomTabNavigator()
 export default class  Menu extends Component{
     render(){
         return (
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={Home} options={{tabBarIcon:()=><FontAwesome name="home" size={24} color="black" />}}/>
-                <Tab.Screen name="NewPost" component={NewPost} options={{tabBarIcon:()=><MaterialIcons name="add-box" size={24} color="black" />}}/>
-                <Tab.Screen name="MiPerfil" component={MiPerfil} options={{tabBarIcon:()=><Ionicons name="person" size={24} color="black" />}}/>
-                <Tab.Screen name = "Busqueda" component ={Busqueda} options ={{tabBarIcon:()=><FontAwesome name="search" size={24} color="black" />}}/>
+            
+            <Tab.Navigator screenOptions={{ tabBarStyle:{backgroundColor:"#218EAB", borderColor: "#080f28", borderTopWidth:5} }}>
+                <Tab.Screen name="Home" component={Home}options={ {tabBarIcon:()=><FontAwesome name="home" size={24} color="black" />, headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
+                <Tab.Screen name="NewPost" component={NewPost} options={{tabBarIcon:()=><MaterialIcons name="add-box" size={24} color="black" />,headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
+                <Tab.Screen name="MiPerfil" component={MiPerfil} options={{tabBarIcon:()=><Ionicons name="person" size={24} color="black" />,headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
+                <Tab.Screen name = "Busqueda" component ={Busqueda} options ={{tabBarIcon:()=><FontAwesome name="search" size={24} color="black" />,headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
             </Tab.Navigator>
                
         )
