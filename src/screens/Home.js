@@ -37,6 +37,8 @@ class Home extends Component{
         return(
              <>
                 <FlatList  
+                    style={style.container}
+                    ItemSeparatorComponent={()=>(<View style={{height: 2, backgroundColor: '#B7B9BF', width: 400, alignSelf:'center'}}></View>)}
                     data={this.state.posteos}
                     keyExtrator={item => item.id.toString()}
                     renderItem={({item})=>
@@ -52,3 +54,9 @@ class Home extends Component{
     }
 }
 export default Home
+const style = StyleSheet.create({
+    container: {
+        backgroundColor:'#d9d9d9'
+
+    }
+})

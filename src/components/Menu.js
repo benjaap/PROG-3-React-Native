@@ -4,8 +4,8 @@ import MiPerfil from "../screens/MiPerfil"
 
 import NewPost from "../screens/NewPost"
 import Busqueda from "../screens/Busqueda"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import {Stylesheet , Text , View } from "react-native"
+import { BottomTabBarHeightCallbackContext, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import {StyleSheet , Text , View } from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -18,14 +18,52 @@ export default class  Menu extends Component{
     render(){
         return (
             
-            <Tab.Navigator screenOptions={{ tabBarStyle:{backgroundColor:"#218EAB", borderColor: "#080f28", borderTopWidth:5} }}>
-                <Tab.Screen name="Home" component={Home}options={ {tabBarIcon:()=><FontAwesome name="home" size={24} color="black" />, headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
-                <Tab.Screen name="NewPost" component={NewPost} options={{tabBarIcon:()=><MaterialIcons name="add-box" size={24} color="black" />,headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
-                <Tab.Screen name="MiPerfil" component={MiPerfil} options={{tabBarIcon:()=><Ionicons name="person" size={24} color="black" />,headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
-                <Tab.Screen name = "Busqueda" component ={Busqueda} options ={{tabBarIcon:()=><FontAwesome name="search" size={24} color="black" />,headerStyle:{ backgroundColor:"#218EAB", borderColor: "#080f28", borderBottomWidth:5}}}/>
+            <Tab.Navigator 
+            initialRouteName="Home"
+            screenOptions={{
+                tabBarActiveTintColor:"#00c2cb",
+                backgroundColor: "#00c2cb",
+                headerBackgroundContainerStyle:{color:"#00c2cb"},
+                headerLeftLabelVisible:false
+            }}
+            >
+                <Tab.Screen 
+                    name="Home" 
+                    component={Home}
+                    options={ {tabBarIcon:({color, size})=>(<FontAwesome name="home" color={color} size={28} />),
+                    headerShown:false,
+                    
+                }}/>
+                <Tab.Screen
+                     name="NewPost" 
+                     component={NewPost} 
+                     options={{tabBarIcon:({color, size})=>(<MaterialIcons name="add-box" color={color} size={28}  />),
+                     headerShown:false,
+                }}/>
+                <Tab.Screen 
+                    name="MiPerfil" 
+                    component={MiPerfil}
+                    options={{tabBarIcon:({color, size})=> (<Ionicons name="person"  color={color} size={28} />),
+                    headerShown:false,
+               }}/>
+                <Tab.Screen 
+                    name = "Busqueda"
+                    component ={Busqueda} 
+                    options ={{tabBarIcon:({color, size})=>(<FontAwesome name="search"color={color}  size={28} />),
+                    headerShown:false,
+                }}/>
             </Tab.Navigator>
                
         )
     }
     
+    
 }
+const style= StyleSheet.create({
+    tab:{
+        color:"red"
+            }
+        
+        
+   
+})

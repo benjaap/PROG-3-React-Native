@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
-import { Text, TextInput, TouchableOpacity, StyleSheet, Image, } from 'react-native';
-
+import { Text, TextInput, TouchableOpacity, StyleSheet, Image, View} from 'react-native';
+import { BottomTabBarHeightCallbackContext } from '@react-navigation/bottom-tabs';
+import { AutoFocus } from 'expo-camera';
+import { FontAwesome } from '@expo/vector-icons';
 class Post extends Component {
 
     constructor(props) {
@@ -43,7 +45,7 @@ class Post extends Component {
        
 
         return (
-            <>
+            <View style={style.container}>
 
 
                 <Image
@@ -51,52 +53,70 @@ class Post extends Component {
                     source={{ uri: this.props.posteo.data.url }}
                     resizeMode='contain'
                 />
-
-                <Text> {this.props.posteo.data.descripcion} </Text>
-                <TouchableOpacity onPress={() => { this.likear(this.props.posteo.id) }}>
-                    <Text>Dar Like</Text>
+                <Text style={style.descripcion}><strong>{this.props.posteo.data.owner}:</strong> {this.props.posteo.data.descripcion} </Text>
+                <TouchableOpacity  onPress={() => { this.likear(this.props.posteo.id) } }>
+                
+                    <Text style={style.comment}>Dar Like ❤️</Text>
                 </TouchableOpacity>
+                
+                <TouchableOpacity onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
                 <TextInput
-                    style={style.campo}
+                    style={style.comment}
                     keyboardType='default'
-                    placeholder='comenta'
+                    placeholder='Haz un comentario     🖋️' 
                     onChangeText={text => this.setState({ comentario: text })}
                     value={this.state.comentario}
                 />
-                <TouchableOpacity onPress={() => { this.agregarComentario(this.props.posteo.id) }} >
-                    <Text>Comentar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navegacion.navigate('Comentarios', {id: this.props.posteo.id } )} >
-                    <Text>Mas Comentarios</Text>
+                <TouchableOpacity style={style.comment} onPress={() => this.props.navegacion.navigate('Comentarios', {id: this.props.posteo.id } )} >
+                    <Text>Ver Más Comentarios  </Text>
                 </TouchableOpacity>
                 
 
 
 
-            </>
+            </View>
         )
     }
 }
 
 const style = StyleSheet.create({
-    campo: {
-        fontSize: 18,
-        borderColor: 'red',
-        borderEndWidth: 1,
+    comment: {
+        fontSize: 15,
+        borderColor: 'black',
+        borderWidth: 1,
         borderStyle: 'solid',
         borderRadius: 5,
-        marginVertical: 8,
-        marginHorizontal: 16
-
+        marginTop:10,
+        marginLeft:40,
+        backgroundColor:"#EEEFEF",
+        width:"fit-content"
     },
+    
     image: {
+        display: "inline-block",
+        margin:"auto",
         width: 250,
-        height: 250,
+        height: 220,
+    },
+    descripcion:{
+        fontSize:15,
+        borderColor:"black",
+        textAlign:'left',
+        backgroundColor:"#fff",
+        width:250,
+        marginTop:10,
+        marginLeft:40,
+
     },
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        backgroundColor: "white",
+        margin:20,
+        padding:10
+
     }
 
 
