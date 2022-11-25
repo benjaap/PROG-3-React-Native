@@ -3,9 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-nativ
 import { db, auth } from '../firebase/config';
 import firebase from "firebase";
 
-
-
-
 class Register extends Component {
     constructor(props) {
         super(props)
@@ -16,41 +13,57 @@ class Register extends Component {
             err: '',
             post: '',
             bio: '',
-
+            error: {
+                email: '',
+                pass: ''
+            }
         }
     }
 
-    componentDidMount(){
-        auth.onAuthStateChanged((user)=> {this.props.navigation.navigate("Menu")})
+    componentDidMount() {
+        auth.onAuthStateChanged((user) => { this.props.navigation.navigate("Menu") })
     }
 
-    
-
     register(email, password, username, bio, post) {
+        if (this.state.email.length == 0) {
+            this.setState({ error: { email: 'Tenes que ingresar una direccion de email' } })
+            return
+        }
+        else if (this.state.password.length == 0) {
+            this.setState({ error: { password: 'Tenes que ingresar una contraseña' } })
+            return
+        }
+        else if (this.state.username.length == 0) {
+            this.setState({ error: { username: 'Tenes que ingresar un nombre de usuario' } })
+            return
+        }
+        this.setState({ error: { email: '', password: '', username: '' } })
+
         auth.createUserWithEmailAndPassword(email, password)
-        .then( (res)=> {
-            db.collection('users').add ({
-                email: email,
-                username: username,
-                bio: bio,
-                
-            })   
-            .then((res)=> {
-                this.setState({
-                    email: "",
-                    password: "",
-                    username: "",
-                    bio:"",
-                });
-                this.props.navigation.navigate("Menu");
-            }) }
+            .then((res) => {
+                db.collection('users').add({
+                    email: email,
+                    username: username,
+                    bio: bio,
+
+                })
+                    .then((res) => {
+                        this.setState({
+                            email: "",
+                            password: "",
+                            username: "",
+                            bio: "",
+                        });
+                        this.props.navigation.navigate("Menu");
+                    })
+            }
             )
-            .catch(err => this.setState({err: err.message}) )
+            .catch(err => this.setState({ err: err.message }))
     }
 
     render() {
         console.log(this.props.navigation)
-        
+
         return (
             <>
                 <View>
@@ -64,14 +77,20 @@ class Register extends Component {
                         onChangeText={userEmail => this.setState({ email: userEmail })}
                         value={this.state.email}
                     />
+                    <Text>
+                        {this.state.error.email && 'Tenes que ingresar una direccion de email'}
+                    </Text>
                     <TextInput
                         style={style.campo}
                         placeholder='contraseña'
                         keyboardType="default"
                         secureTextEntry='true'
                         value={this.state.password}
-                        onChangeText={password => this.setState({ password: password})}
+                        onChangeText={password => this.setState({ password: password })}
                     />
+                    <Text>
+                        {this.state.error.password && 'Tenes que ingresar una contraseña'}
+                    </Text>
                     <TextInput
                         style={style.campo}
                         placeholder='Nombre de Usuario'
@@ -79,6 +98,9 @@ class Register extends Component {
                         value={this.state.username}
                         onChangeText={username => this.setState({ username: username })}
                     />
+                    <Text>
+                        {this.state.error.username && 'Tenes que ingresar un nombre de usuario'}
+                    </Text>
                     <TextInput
                         style={style.campo}
                         placeholder='Biografia'
@@ -106,7 +128,7 @@ class Register extends Component {
     }
 }
 
-const style = StyleSheet.create ({
+const style = StyleSheet.create({
     campo: {
         fontSize: 18,
         borderColor: 'red',
@@ -115,7 +137,7 @@ const style = StyleSheet.create ({
         borderRadius: 5,
         marginVertical: 8,
         marginHorizontal: 16
-        
+
     }
 
 
