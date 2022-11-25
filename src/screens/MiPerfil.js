@@ -84,11 +84,12 @@ export default class MiPerfil extends Component {
                 <Text style={style.comment}>Posteos:{this.state.post.length}</Text>
                 {this.state.post.length > 0 ? (
                     <FlatList
+                        ItemSeparatorComponent={()=>(<View style={{height: 2, backgroundColor: '#B7B9BF', width: 400, alignSelf:'center'}}></View>)}
                         data={this.state.post}
                         keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) =>(
                             <>
-                                <Post posteo={item} />
+                                <Post posteo={item} navegacion={this.props.navigation} />
                                 <TouchableOpacity onPress={() => this.delete(item.id)}>
                                 <Text style= {style.buscar}>Borrar Posteo</Text>
                                 </TouchableOpacity>

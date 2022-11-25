@@ -50,9 +50,9 @@ class Post extends Component {
     }
 
     render() {
-
-
+        console.log(this.props.navigate)
         return (
+           
             <View style={style.container}>
 
 

@@ -77,19 +77,19 @@ export default class Edit extends Component {
                 <TextInput
                     style={style.comment}
                     keyboardType='default'
-                    placeholder={this.props.info.data.bio}
+                    placeholder="EDITAR BIOGRAFIA"
                     onChangeText={text => this.setState({ bio: text })}
                     value={this.state.bio}
                 />
                 <TextInput
                     style={style.comment}
                     keyboardType='default'
-                    placeholder={this.props.info.data.username}
+                    placeholder="EDITAR NOMBRE DE USUARIO"
                     onChangeText={text => this.setState({ user: text })}
                     value={this.state.user}
                 />
                 <TouchableOpacity onPress={() => { this.actualizarDatos() }}>
-                    <Text>EDITAR</Text>
+                    <Text style={style.buscar}>EDITAR</Text>
                 </TouchableOpacity>
 
             </>
@@ -108,6 +108,18 @@ const style = StyleSheet.create({
         marginTop: 10,
         marginLeft: 40,
         backgroundColor: "#EEEFEF",
-        width: "fit-content"
-    }
+        width: 300
+    },
+    buscar:{
+        fontSize: 13,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 5,
+        marginLeft: 40, 
+        marginTop:15, 
+        backgroundColor: "white",
+        width: "fit-content",
+        padding:5
+    },
 })

@@ -155,7 +155,6 @@ const style = StyleSheet.create({
         height:30,
         backgroundColor:"#00c2cb",
         color:"white"
-
     },
     container: {
         fontSize: 30,

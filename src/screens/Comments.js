@@ -33,20 +33,24 @@ export default class Comments extends Component {
 
         return (
             <>
+            <Text style={style.title}>COMENTARIOS</Text>
                 <FlatList
                     data={this.state.comment}
+                    style={style.container}
+                    ItemSeparatorComponent={()=>(<View style={{height: 2, backgroundColor: '#B7B9BF', width: 400, alignSelf:'center'}}></View>)}
                     keyExtractor={item => item.createdAt}
                     renderItem={({ item }) => (
                         <View>
                             {auth.currentUser.email === item.owner ? (
                                 <>
-                                    <Text>Comentaste: </Text>
-                                    <Text>{item.comment}</Text>
+                                    <Text style={style.descripcion}>Comentaste: </Text>
+                                    <Text style={style.descripcion}>{item.comment}</Text>
                                 </>
                             ) : (
                                 <>
-                                    <Text>{item.owner} comento: </Text>
-                                    <Text>{item.comment}</Text>
+                                    <Text style={style.descripcion}><strong>{item.owner} </strong>comento: </Text>
+                                    <Text style={style.descripcion} >{item.comment}</Text>
+                                    
                                 </>)
                             }
                         </View>
@@ -59,3 +63,64 @@ export default class Comments extends Component {
     }
 }
 
+const style = StyleSheet.create({
+    comment: {
+       
+        fontSize: 15,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 5,
+        marginTop: 10,
+        marginLeft: 40,
+        backgroundColor: "#EEEFEF",
+        width: "fit-content"
+    },
+    descripcion: {
+        fontSize: 15,
+        borderColor: "black",
+        textAlign: 'left',
+        backgroundColor: "#fff",
+        width: 250,
+        marginTop: 10,
+        marginLeft: 40,
+      
+      },
+    buscar:{
+        fontSize: 13,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 5,
+        margin: 10,  
+        backgroundColor: "white",
+        width: 360,
+        padding:5
+    },
+    title:{
+        fontSize: 20,
+        borderColor: "black",
+        textAlign: 'center',
+        fontWeight:"bold",
+        width: 380,
+        marginTop: 10,
+        marginLeft:5,
+        height:30,
+        backgroundColor:"#00c2cb",
+        color:"white"
+
+    },
+    container: {
+        fontSize: 30,
+        borderColor: '#B7B9BF',
+        textAlign: 'center',
+        fontWeight:"bolder",
+        width: 380,
+        marginTop: 25,
+        marginLeft:5,
+        backgroundColor:"white",
+        padding:15,
+        height:"auto",
+        borderWidth:3
+    }
+})

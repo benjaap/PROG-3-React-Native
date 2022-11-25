@@ -48,7 +48,7 @@ export default class EditPerfil extends Component {
 
         return (
             <>
-                <Text>Edita tu Perfil</Text>
+                <Text style={style.title}>EDITAR PERFIL</Text>
                 <FlatList
                     style={style.container}
                     data={this.state.user}
@@ -80,7 +80,19 @@ const style = StyleSheet.create({
         marginTop: 10,
         marginLeft: 40,
         backgroundColor: "#EEEFEF",
-        width: "fit-content"
-    }
+        width: 300
+    },
+    title:{
+        fontSize: 20,
+        borderColor: "black",
+        textAlign: 'center',
+        fontWeight:"bold",
+        width: 380,
+        marginTop: 10,
+        marginLeft:5,
+        height:30,
+        backgroundColor:"#00c2cb",
+        color:"white"
+    },
 })
 
