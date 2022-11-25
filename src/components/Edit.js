@@ -16,7 +16,7 @@ export default class Edit extends Component {
         }
     }
     actualizarDatos() {
-        if(this.state.bio && this.state.user == ''){
+        if(this.state.bio == '' && this.state.user == ''){
             db.collection('users')
             .doc(this.props.info.id)
             .update({
@@ -28,7 +28,7 @@ export default class Edit extends Component {
                 console.log(res)
 
             })
-        }else if(this.state.bio == ''){
+        }else if(this.state.bio === ''){
             db.collection('users')
             .doc(this.props.info.id)
             .update({
@@ -40,7 +40,7 @@ export default class Edit extends Component {
                 console.log(res)
 
             })  
-        }else if(this.state.user == ''){
+        }else if(this.state.user === ''){
             db.collection('users')
             .doc(this.props.info.id)
             .update({
