@@ -72,12 +72,16 @@ export default class MiPerfil extends Component {
     render() {
         return (
             <View>
-                <Text>MI PERFIL</Text>
+                <Text style={style.title}>MI PERFIL</Text>
 
-                <Text>Usuario: {this.state.username}</Text>
-                <Text>Email: {auth.currentUser.email}</Text>
-                <Text>Bio: {this.state.bio}</Text>
-                <Text>Posteos:{this.state.post.length}</Text>
+                <TouchableOpacity style={style.buscar}onPress={() => this.props.navigation.navigate('EditPerfil')}>
+                    <Text>EDITAR PERFIL</Text>
+                </TouchableOpacity>
+
+                <Text style={style.comment}>Usuario: {this.state.username}</Text>
+                <Text style={style.comment}>Email: {auth.currentUser.email}</Text>
+                <Text style={style.comment}>Bio: {this.state.bio}</Text>
+                <Text style={style.comment}>Posteos:{this.state.post.length}</Text>
                 {this.state.post.length > 0 ? (
                     <FlatList
                         data={this.state.post}
@@ -86,22 +90,71 @@ export default class MiPerfil extends Component {
                             <>
                                 <Post posteo={item} />
                                 <TouchableOpacity onPress={() => this.delete(item.id)}>
-                                <Text>Borrar Posteo</Text>
+                                <Text style= {style.buscar}>Borrar Posteo</Text>
                                 </TouchableOpacity>
                             </>
                         )}
                     />
                 ) : (
-                    <Text>No hay posteos</Text>
+                    <Text style={style.comment}>Lo sentimos, no hay posteos ☹️</Text>
                 )}
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('EditPerfil')}>
-                    <Text>EDITAR PERFIL</Text>
-                </TouchableOpacity>
+               
 
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('LogOut')}>
+                <TouchableOpacity style={style.buscar}onPress={() => this.props.navigation.navigate('LogOut')}>
                     <Text>Cerrar Sesión</Text>
                 </TouchableOpacity>
             </View>)
     }
 }
+const style = StyleSheet.create({
+    comment: {
+       
+        fontSize: 20,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 5,
+        marginTop: 10,
+        marginLeft: 12,
+        backgroundColor: "white",
+        width: 360
+    },
+    buscar:{
+        fontSize: 13,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 5,
+        margin: 10,  
+        backgroundColor: "white",
+        width: 360,
+        padding:5
+    },
+    title:{
+        fontSize: 20,
+        borderColor: "black",
+        textAlign: 'center',
+        fontWeight:"bold",
+        width: 380,
+        marginTop: 10,
+        marginLeft:5,
+        height:30,
+        backgroundColor:"#00c2cb",
+        color:"white"
+
+    },
+    container: {
+        fontSize: 30,
+        borderColor: '#B7B9BF',
+        textAlign: 'center',
+        fontWeight:"bolder",
+        width: 380,
+        marginTop: 25,
+        marginLeft:5,
+        backgroundColor:"white",
+        padding:15,
+        height:"auto",
+        borderWidth:3
+    }
+})

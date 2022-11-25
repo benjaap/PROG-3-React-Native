@@ -153,7 +153,8 @@ const style = StyleSheet.create({
         marginTop: 10,
         marginLeft:5,
         height:30,
-        backgroundColor:"#00c2cb"
+        backgroundColor:"#00c2cb",
+        color:"white"
 
     },
     container: {
