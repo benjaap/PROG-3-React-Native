@@ -11,9 +11,10 @@ export default class Perfil extends Component {
             email: '',
             username: '',
             post: [],
+            image:""
         }
     }
-
+    
     componentDidMount() {
         db.collection('posts')
             .where('owner', '==', this.props.route.params.username)
@@ -55,6 +56,7 @@ export default class Perfil extends Component {
     }
 
     render() {
+        console.log(this.props.route.params)
         return (
             <View>
                 <Text>PERFIL</Text>

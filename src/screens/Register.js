@@ -105,9 +105,7 @@ class Register extends Component {
             quality: 1,
         })
         .then((res) => {
-            if (!image.cancelled) {
-                // this.setState({image: res.assets[0].uri})     
-            }
+            this.state.navigation.navigate("Perfil", {image: this.state.image})
         })
     }
 
